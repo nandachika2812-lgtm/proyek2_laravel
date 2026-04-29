@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalPosyandu;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Notifications\AppNotification;
 
 class JadwalPosyanduController extends Controller
 {
@@ -33,6 +35,17 @@ class JadwalPosyanduController extends Controller
             'waktu_selesai' => 'required|date|after:waktu_mulai',
         ]);
 
+        $jadwal = JadwalPosyandu::create($request->all());
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $user->notify(new AppNotification([
+                'title' => 'Jadwal Baru',
+                'message' => 'Jadwal posyandu baru telah tersedia',
+                'type' => 'jadwal'
+            ]));
+        }
+        return redirect()->back();
 
         JadwalPosyandu::create($validated);
         return redirect()->route('pemeriksaan.index', ['tab' => 'jadwal'])->with('success', 'Jadwal berhasil ditambahkan!');
