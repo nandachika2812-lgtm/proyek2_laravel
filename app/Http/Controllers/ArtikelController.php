@@ -12,7 +12,13 @@ class ArtikelController extends Controller
     public function index()
     {
         $heroArtikel = Artikel::latest()->first();
-        $artikels = Artikel::latest()->where('id', '!=', $heroArtikel->id)->paginate(6);
+
+        $artikels = $heroArtikel
+            ? Artikel::latest()
+                ->where('id', '!=', $heroArtikel->id)
+                ->paginate(6)
+            : Artikel::paginate(6);
+
         return view('pengguna.artikel.index', compact('heroArtikel', 'artikels'));
     }
 
