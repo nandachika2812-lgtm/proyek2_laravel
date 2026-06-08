@@ -13,7 +13,7 @@ class ExampleTest extends TestCase
     /** @test */
     public function user_can_add_balita_data()
     {
-        $response = $this->post('/peserta/store', [
+        $response = $this->post(route('peserta.store', [
             'kategori' => 'balita',
             'nik' => '123456789',
             'nama_balita' => 'Budi',
@@ -22,7 +22,7 @@ class ExampleTest extends TestCase
             'jenis_kelamin' => 'Laki-laki',
             'alamat' => 'Jl. Mawar No.1',
             'nama_orang_tua' => 'Pak Agus',
-        ]);
+        ]));
 
         // pastikan redirect (berhasil)
         $response->assertStatus(302);
