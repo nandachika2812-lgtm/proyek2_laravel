@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Balita;
+use App\Models\User;
 
 class ExampleTest extends TestCase
 {
@@ -13,8 +14,12 @@ class ExampleTest extends TestCase
     /** @test */
     public function user_can_add_balita_data()
     {
+        $user = User::factory()->create();
+
         $response = $this->post(route('peserta.store', [
             'kategori' => 'balita',
+            'user_id' => $user->id,
+            
             'nik' => '123456789',
             'nama_balita' => 'Budi',
             'usia_tahun' => 3,
