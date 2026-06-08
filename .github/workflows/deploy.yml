@@ -112,7 +112,13 @@ jobs:
 
             # Tunggu container siap
             echo "⏳ Menunggu container ready..."
-            sleep 60
+            
+            until docker compose exec -T db mysqladmin ping -h localhost --silent; do
+            echo "MySQL belum siap..."
+            sleep 5
+            done
+
+            echo "✅ MySQL siap"
 
             # Jalankan migrasi database
             docker compose exec -T app php artisan migrate --force --no-interaction
