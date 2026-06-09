@@ -32,7 +32,6 @@ COPY . .
 
 RUN composer install --optimize-autoloader --no-dev
 
-# TAMBAHAN INI
 RUN npm install
 RUN npm run build
 
