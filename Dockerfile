@@ -30,13 +30,14 @@ WORKDIR /var/www/html
 
 COPY . .
 
-# Install dependencies Laravel
 RUN composer install --optimize-autoloader --no-dev
 
-# Set permission
+# TAMBAHAN INI
+RUN npm install
+RUN npm run build
+
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copy konfigurasi Nginx dan Supervisor
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
